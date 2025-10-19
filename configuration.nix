@@ -35,9 +35,16 @@
     extraGroups = [ "wheel" ];
   };
 
+  services.displayManager.ly.enable = true;
+
+  programs.hyprland.enable = true;
+
   environment.systemPackages = with pkgs; [
     git
+    kdePackages.dolphin
+    kitty
     vim
+    wofi
   ];
 
   system.stateVersion = "25.05";
