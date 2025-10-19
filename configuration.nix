@@ -35,11 +35,14 @@
   users.users.paddy = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+    shell = pkgs.nushell;
   };
 
   home-manager = {
+    extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
     useUserPackages = true;
+    users.paddy = ./home.nix;
   };
 
   services.displayManager.ly.enable = true;
@@ -50,6 +53,7 @@
     git
     kdePackages.dolphin
     kitty
+    nushell
     vim
     wofi
   ];
