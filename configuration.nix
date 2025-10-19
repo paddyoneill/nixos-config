@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -9,6 +10,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   nix.settings.experimental-features = [
@@ -33,6 +35,11 @@
   users.users.paddy = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
   };
 
   services.displayManager.ly.enable = true;
