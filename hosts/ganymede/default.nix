@@ -8,7 +8,7 @@
   imports =
     [
       ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.home-manager
+      ../../modules/nixos
     ];
 
   nix.gc = {
@@ -49,12 +49,7 @@
     shell = pkgs.nushell;
   };
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.paddy = ./home.nix;
-  };
+  home-manager.users.paddy = ../../users/paddy.nix;
 
   services.displayManager.ly.enable = true;
 

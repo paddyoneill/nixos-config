@@ -19,7 +19,7 @@
     nixosConfigurations.ganymede = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
-        ./configuration.nix
+        ./hosts/ganymede
       ];
     };
   };
