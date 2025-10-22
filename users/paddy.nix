@@ -6,14 +6,14 @@
 {
   imports = [
     ../modules/home-manager/alacritty.nix
-    ../modules/home-manager/nixvim.nix
+    ../modules/home-manager/devel.nix
     ../modules/home-manager/git.nix
+    ../modules/home-manager/k8s.nix
+    ../modules/home-manager/nixvim.nix
   ];
 
   home.packages = with pkgs; [
-    go
     nerd-fonts.hack
-    ripgrep
   ];
 
   programs.firefox.enable = true;
