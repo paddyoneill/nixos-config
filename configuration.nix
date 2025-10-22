@@ -1,7 +1,5 @@
 {
-  config,
   inputs,
-  lib,
   pkgs,
   ...
 }:
@@ -13,12 +11,25 @@
       inputs.home-manager.nixosModules.home-manager
     ];
 
-  nix.settings.experimental-features = [
-    "flakes"
-    "nix-command"
-  ];
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
-  boot.loader.systemd-boot.enable = true;
+  nix.settings = {
+    auto-optimise-store = true;
+    experimental-features = [
+      "flakes"
+      "nix-command"
+    ];
+  };
+
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 3;
+  };
+
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "ganymede";
@@ -52,9 +63,9 @@
   environment.systemPackages = with pkgs; [
     git
     kdePackages.dolphin
-    kitty
     nushell
     vim
+    waybar
     wofi
   ];
 
