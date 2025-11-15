@@ -1,6 +1,54 @@
-_:
-
 {
+  lib,
+  pkgs,
+  ...
+}:
+let
+  mkTuple = lib.gvariant.mkTuple;
+in
+{
+  home.packages = with pkgs; [
+    nerd-fonts.hack
+    delve
+    gcc14
+    go
+    helm
+    helm-docs
+    kubectl
+    k9s
+  ];
+
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/desktop/input-sources" = {
+        sources = [(mkTuple ["xkb" "gb"])];
+      };
+    };
+  };
+
+  programs.firefox.enable = true;
+
+  programs.keepassxc.enable = true;
+
+  home.stateVersion = "25.05";
+
+  programs.git = {
+    enable = true;
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+    };
+    userName = "Paddy O'Neill";
+    userEmail = "paddy.oneill93@gmail.com";
+  };
+
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs;
+  };
+
   programs.alacritty = {
     enable = true;
     settings = {

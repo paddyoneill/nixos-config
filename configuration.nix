@@ -7,14 +7,18 @@
 {
   imports =
     [
+      inputs.home-manager.nixosModules.home-manager
       ./hardware-configuration.nix
-      ../../modules/nixos
     ];
 
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 7d";
+  };
+
+  nixpkgs.config = {
+    allowUnfree = true;
   };
 
   nix.settings = {
@@ -43,25 +47,42 @@
     keyMap = "uk";
   };
 
+  security.rtkit.enable = true;
+
+  services.pipewire = {
+    enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    pulse.enable = true;
+  };
+
   users.users.paddy = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     shell = pkgs.nushell;
   };
 
-  home-manager.users.paddy = ../../users/paddy.nix;
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.paddy = ./home.nix;
+  };
 
-  services.displayManager.ly.enable = true;
+  programs.steam.enable = true;
 
-  programs.hyprland.enable = true;
+  services.xserver = {
+    enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [
     git
-    kdePackages.dolphin
     nushell
     vim
-    waybar
-    wofi
   ];
 
   system.stateVersion = "25.05";
